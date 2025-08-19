@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Integral - Inicio</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --btc-color: #f7931a;
+            --eth-color: #627eea;
+            --bnb-color: #f3ba2f;
+            --sol-color: #00ffbd;
+            --bch-color: #8dc351;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .logo {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 12px 20px;
+            color: var(--light-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding-left: 25px;
+        }
+        
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .submenu {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .submenu .nav-link {
+            padding-left: 40px;
+            font-size: 0.85rem;
+        }
+        
+        .nav-item.active .submenu {
+            max-height: 500px;
+        }
+        
+        /* Main content */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            color: var(--dark-color);
+        }
+        
+        .datetime {
+            background-color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .welcome-card {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 30px;
+        }
+        
+        .welcome-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .welcome-card p {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 70%;
+        }
+        
+        /* Crypto Section */
+        .crypto-section {
+            grid-column: 1 / -1;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+        
+        .crypto-section h2 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .crypto-section h2 i {
+            margin-right: 10px;
+            color: var(--btc-color);
+        }
+        
+        .crypto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        
+        .crypto-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .crypto-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .crypto-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .crypto-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .btc { background-color: var(--btc-color); }
+        .eth { background-color: var(--eth-color); }
+        .bnb { background-color: var(--bnb-color); }
+        .sol { background-color: var(--sol-color); color: #000; }
+        .bch { background-color: var(--bch-color); }
+        
+        .crypto-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .crypto-symbol {
+            color: #777;
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+        
+        .crypto-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .crypto-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        
+        .crypto-stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        
+        .stat-value {
+            font-weight: 500;
+        }
+        
+        .crypto-change {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .positive {
+            background-color: rgba(0, 200, 83, 0.1);
+            color: #00c853;
+        }
+        
+        .negative {
+            background-color: rgba(255, 53, 71, 0.1);
+            color: #ff3547;
+        }
+        
+        .ath-percentage {
+            font-size: 0.85rem;
+            margin-top: 2px;
+        }
+        
+        /* Dollar Section */
+        .dollar-section {
+            grid-column: 1 / -1;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+        
+        .dollar-section h2 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .dollar-section h2 i {
+            margin-right: 10px;
+            color: #2e7d32;
+        }
+        
+        .dollar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        
+        .dollar-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .dollar-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dollar-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .dollar-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 10px;
+            background-color: #2e7d32;
+        }
+        
+        .dollar-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .dollar-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .dollar-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .dollar-stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .dollar-stat-label {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        
+        .dollar-stat-value {
+            font-weight: 500;
+        }
+        
+        .dollar-variation {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .dollar-positive {
+            background-color: rgba(0, 200, 83, 0.1);
+            color: #00c853;
+        }
+        
+        .dollar-negative {
+            background-color: rgba(255, 53, 71, 0.1);
+            color: #ff3547;
+        }
+        
+        .last-updated {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 10px;
+            text-align: right;
+        }
+        /* Flight Section */
+        .flight-section {
+            grid-column: 1 / -1;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+        
+        .flight-section h2 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .flight-section h2 i {
+            margin-right: 10px;
+            color: var(--flight-color);
+        }
+        
+        .flight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        
+        .flight-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .flight-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .flight-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .flight-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 10px;
+            background-color: var(--flight-color);
+        }
+        
+        .flight-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .flight-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: #e74c3c;
+        }
+        
+        .flight-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        
+        .flight-detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .flight-label {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        
+        .flight-value {
+            font-weight: 500;
+        }
+        
+        .flight-airline {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .airline-logo {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            background-color: #f1f1f1;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .airline-name {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .flight-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .crypto-grid, .dollar-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Sistema Integral de Gestión</h2>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#" class="nav-link">Resumen</a></li>
+                        <li><a href="#" class="nav-link">Actividades</a></li>
+                        <li><a href="#" class="nav-link">Notificaciones</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-chart-line"></i> Mefin
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#" class="nav-link">Reportes</a></li>
+                        <li><a href="#" class="nav-link">Análisis</a></li>
+                        <li><a href="#" class="nav-link">Proyecciones</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-building"></i> Propiedades
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#" class="nav-link">Inventario</a></li>
+                        <li><a href="#" class="nav-link">Valuaciones</a></li>
+                        <li><a href="#" class="nav-link">Documentos</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-tools"></i> Herramientas
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#" class="nav-link">Calculadoras</a></li>
+                        <li><a href="#" class="nav-link">Conversores</a></li>
+                        <li><a href="#" class="nav-link">Generadores</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-ellipsis-h"></i> Varios
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#" class="nav-link">Configuración</a></li>
+                        <li><a href="#" class="nav-link">Ayuda</a></li>
+                        <li><a href="#" class="nav-link">Soporte</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-bars"></i> Otro Menu
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#" class="nav-link">Opción 1</a></li>
+                        <li><a href="#" class="nav-link">Opción 2</a></li>
+                        <li><a href="#" class="nav-link">Opción 3</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header">
+                <h1>Sistema de Gestión - Guillermo Clemente</h1>
+                <div class="datetime" id="datetime"></div>
+            </div>
+            
+            <div class="dashboard">
+                <div class="card welcome-card">
+                    <h2>Bienvenido al Sistema Integral</h2>
+                    <!-- <p>Acceda a todas las herramientas y módulos desde el menú lateral. Este sistema le proporciona información en tiempo real para una mejor toma de decisiones.</p>
+                -->
+                </div>
+                
+                <!-- Sección de Dólares -->
+                <section class="dollar-section">
+                    <h2><i class="fas fa-dollar-sign"></i> Cotización del Dólar</h2>
+                    <div class="dollar-grid" id="dollar-grid">
+                        <!-- Dólar Oficial -->
+                        <div class="dollar-card">
+                            <div class="dollar-header">
+                                <div class="dollar-icon">OF</div>
+                                <div class="dollar-name">Dólar Oficial</div>
+                            </div>
+                            <div class="dollar-price" id="oficial-price">-</div>
+                            <div class="dollar-stats">
+                                <div class="dollar-stat-item">
+                                    <span class="dollar-stat-label">Compra</span>
+                                    <span class="dollar-stat-value" id="oficial-buy">-</span>
+                                </div>
+                                <div class="dollar-stat-item">
+                                    <span class="dollar-stat-label">Venta</span>
+                                    <span class="dollar-stat-value" id="oficial-sell">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Dólar Blue -->
+                        <div class="dollar-card">
+                            <div class="dollar-header">
+                                <div class="dollar-icon" style="background-color: #1565c0;">BL</div>
+                                <div class="dollar-name">Dólar Blue</div>
+                            </div>
+                            <div class="dollar-price" id="blue-price">-</div>
+                            <div class="dollar-stats">
+                                <div class="dollar-stat-item">
+                                    <span class="dollar-stat-label">Compra</span>
+                                    <span class="dollar-stat-value" id="blue-buy">-</span>
+                                </div>
+                                <div class="dollar-stat-item">
+                                    <span class="dollar-stat-label">Venta</span>
+                                    <span class="dollar-stat-value" id="blue-sell">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Dólar MEP -->
+                        <div class="dollar-card">
+                            <div class="dollar-header">
+                                <div class="dollar-icon" style="background-color: #6a1b9a;">ME</div>
+                                <div class="dollar-name">Dólar MEP</div>
+                            </div>
+                            <div class="dollar-price" id="mep-price">-</div>
+                            <div class="dollar-stats">
+                                <div class="dollar-stat-item">
+                                    <span class="dollar-stat-label">Último</span>
+                                    <span class="dollar-stat-value" id="mep-last">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Dólar Banco Nación -->
+                        <div class="dollar-card">
+                            <div class="dollar-header">
+                                <div class="dollar-icon" style="background-color: #d32f2f;">BN</div>
+                                <div class="dollar-name">Banco Nación</div>
+                            </div>
+                            <div class="dollar-price" id="bna-price">-</div>
+                            <div class="dollar-stats">
+                                <div class="dollar-stat-item">
+                                    <span class="dollar-stat-label">Compra</span>
+                                    <span class="dollar-stat-value" id="bna-buy">-</span>
+                                </div>
+                                <div class="dollar-stat-item">
+                                    <span class="dollar-stat-label">Venta</span>
+                                    <span class="dollar-stat-value" id="bna-sell">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="last-updated" id="dollar-last-updated"></div>
+                </section>
+                
+                <!-- Sección de Criptomonedas -->
+                <section class="crypto-section">
+                    <h2><i class="fas fa-coins"></i> Criptomonedas</h2>
+                    <div class="crypto-grid" id="crypto-grid">
+                        <!-- Tarjetas de criptomonedas aquí -->
+                        <!-- Bitcoin Card -->
+                        <div class="crypto-card">
+                            <div class="crypto-header">
+                                <div class="crypto-icon btc">BTC</div>
+                                <div>
+                                    <span class="crypto-name">Bitcoin</span>
+                                    <span class="crypto-symbol">BTC</span>
+                                </div>
+                            </div>
+                            <div class="crypto-price" id="btc-price">-</div>
+                            <div class="crypto-stats">
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">24h</span>
+                                    <span class="crypto-change" id="btc-change">-</span>
+                                </div>
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">Cap. de Mercado</span>
+                                    <span class="stat-value" id="btc-market-cap">-</span>
+                                </div>
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">ATH</span>
+                                    <span class="stat-value" id="btc-ath">-</span>
+                                    <span class="ath-percentage" id="btc-ath-percentage">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Ethereum Card -->
+                        <div class="crypto-card">
+                            <div class="crypto-header">
+                                <div class="crypto-icon eth">ETH</div>
+                                <div>
+                                    <span class="crypto-name">Ethereum</span>
+                                    <span class="crypto-symbol">ETH</span>
+                                </div>
+                            </div>
+                            <div class="crypto-price" id="eth-price">-</div>
+                            <div class="crypto-stats">
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">24h</span>
+                                    <span class="crypto-change" id="eth-change">-</span>
+                                </div>
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">Cap. de Mercado</span>
+                                    <span class="stat-value" id="eth-market-cap">-</span>
+                                </div>
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">ATH</span>
+                                    <span class="stat-value" id="eth-ath">-</span>
+                                    <span class="ath-percentage" id="eth-ath-percentage">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Binance Coin Card -->
+                        <div class="crypto-card">
+                            <div class="crypto-header">
+                                <div class="crypto-icon bnb">BNB</div>
+                                <div>
+                                    <span class="crypto-name">Binance Coin</span>
+                                    <span class="crypto-symbol">BNB</span>
+                                </div>
+                            </div>
+                            <div class="crypto-price" id="bnb-price">-</div>
+                            <div class="crypto-stats">
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">24h</span>
+                                    <span class="crypto-change" id="bnb-change">-</span>
+                                </div>
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">Cap. de Mercado</span>
+                                    <span class="stat-value" id="bnb-market-cap">-</span>
+                                </div>
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">ATH</span>
+                                    <span class="stat-value" id="bnb-ath">-</span>
+                                    <span class="ath-percentage" id="bnb-ath-percentage">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Solana Card -->
+                        <div class="crypto-card">
+                            <div class="crypto-header">
+                                <div class="crypto-icon sol">SOL</div>
+                                <div>
+                                    <span class="crypto-name">Solana</span>
+                                    <span class="crypto-symbol">SOL</span>
+                                </div>
+                            </div>
+                            <div class="crypto-price" id="sol-price">-</div>
+                            <div class="crypto-stats">
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">24h</span>
+                                    <span class="crypto-change" id="sol-change">-</span>
+                                </div>
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">Cap. de Mercado</span>
+                                    <span class="stat-value" id="sol-market-cap">-</span>
+                                </div>
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">ATH</span>
+                                    <span class="stat-value" id="sol-ath">-</span>
+                                    <span class="ath-percentage" id="sol-ath-percentage">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Bitcoin Cash Card -->
+                        <div class="crypto-card">
+                            <div class="crypto-header">
+                                <div class="crypto-icon bch">BCH</div>
+                                <div>
+                                    <span class="crypto-name">Bitcoin Cash</span>
+                                    <span class="crypto-symbol">BCH</span>
+                                </div>
+                            </div>
+                            <div class="crypto-price" id="bch-price">-</div>
+                            <div class="crypto-stats">
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">24h</span>
+                                    <span class="crypto-change" id="bch-change">-</span>
+                                </div>
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">Cap. de Mercado</span>
+                                    <span class="stat-value" id="bch-market-cap">-</span>
+                                </div>
+                                <div class="crypto-stat-item">
+                                    <span class="stat-label">ATH</span>
+                                    <span class="stat-value" id="bch-ath">-</span>
+                                    <span class="ath-percentage" id="bch-ath-percentage">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+               <!-- # ********************* VUELOS INTERNACIONALES ********************************************** #
+                # ******************************************************************************************* #
+	       -->
+                <!-- Sección de Vuelos Internacionales -->
+                <section class="flight-section">
+                    <h2><i class="fas fa-plane"></i> Vuelos Internacionales</h2>
+                    <div class="flight-grid" id="flight-grid">
+                        <!-- Río de Janeiro -->
+                        <div class="flight-card">
+                            <div class="flight-header">
+                                <div class="flight-icon">RJ</div>
+                                <div class="flight-name">Río de Janeiro</div>
+                            </div>
+                            <div class="flight-price">$245.000</div>
+                            <div class="flight-details">
+                                <div class="flight-detail-item">
+                                    <span class="flight-label">Duración</span>
+                                    <span class="flight-value">3h 45m</span>
+                                </div>
+                                <div class="flight-detail-item">
+                                    <span class="flight-label">Escalas</span>
+                                    <span class="flight-value">Directo</span>
+                                </div>
+                                <div class="flight-detail-item">
+                                    <span class="flight-label">Mejor fecha</span>
+                                    <span class="flight-value">15 Oct</span>
+                                </div>
+                            </div>
+                            <div class="flight-airline">
+                                <div class="airline-logo">AA</div>
+                                <span class="airline-name">Aerolíneas Argentinas</span>
+                            </div>
+                            <div class="flight-badge">MEJOR PRECIO</div>
+                        </div>
+                        
+                        <!-- Miami -->
+                        <div class="flight-card">
+                            <div class="flight-header">
+                                <div class="flight-icon">MI</div>
+                                <div class="flight-name">Miami</div>
+                            </div>
+                            <div class="flight-price">$380.000</div>
+                            <div class="flight-details">
+                                <div class="flight-detail-item">
+                                    <span class="flight-label">Duración</span>
+                                    <span class="flight-value">9h 20m</span>
+                                </div>
+                                <div class="flight-detail-item">
+                                    <span class="flight-label">Escalas</span>
+                                    <span class="flight-value">1 escala</span>
+                                </div>
+                                <div class="flight-detail-item">
+                                    <span class="flight-label">Mejor fecha</span>
+                                    <span class="flight-value">22 Oct</span>
+                                </div>
+                            </div>
+                            <div class="flight-airline">
+                                <div class="airline-logo">LA</div>
+                                <span class="airline-name">LATAM</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Nueva York -->
+                        <div class="flight-card">
+                            <div class="flight-header">
+                                <div class="flight-icon">NY</div>
+                                <div class="flight-name">Nueva York</div>
+                            </div>
+                            <div class="flight-price">$420.000</div>
+                            <div class="flight-details">
+                                <div class="flight-detail-item">
+                                    <span class="flight-label">Duración</span>
+                                    <span class="flight-value">11h 15m</span>
+                                </div>
+                                <div class="flight-detail-item">
+                                    <span class="flight-label">Escalas</span>
+                                    <span class="flight-value">1 escala</span>
+                                </div>
+                                <div class="flight-detail-item">
+                                    <span class="flight-label">Mejor fecha</span>
+                                    <span class="flight-value">18 Oct</span>
+                                </div>
+                            </div>
+                            <div class="flight-airline">
+                                <div class="airline-logo">UA</div>
+                                <span class="airline-name">United Airlines</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Madrid -->
+                        <div class="flight-card">
+                            <div class="flight-header">
+                                <div class="flight-icon">MA</div>
+                                <div class="flight-name">Madrid</div>
+                            </div>
+                            <div class="flight-price">$520.000</div>
+                            <div class="flight-details">
+                                <div class="flight-detail-item">
+                                    <span class="flight-label">Duración</span>
+                                    <span class="flight-value">12h 30m</span>
+                                </div>
+                                <div class="flight-detail-item">
+                                    <span class="flight-label">Escalas</span>
+                                    <span class="flight-value">Directo</span>
+                                </div>
+                                <div class="flight-detail-item">
+                                    <span class="flight-label">Mejor fecha</span>
+                                    <span class="flight-value">25 Oct</span>
+                                </div>
+                            </div>
+                            <div class="flight-airline">
+                                <div class="airline-logo">IB</div>
+                                <span class="airline-name">Iberia</span>
+                            </div>
+                            <div class="flight-badge">OFERTA</div>
+                        </div>
+                    </div>
+                    <div class="last-updated">Precios en pesos argentinos. Actualizado hoy</div>
+                </section>
+
+               <!-- # ********************* FIN VUELOS INTERNACIONALES ********************************************** #
+                # ******************************************************************************************* #
+               --> 
+                <!-- Otras tarjetas del dashboard -->
+                <!-- <div class="card">
+                    <h3>Resumen Financiero</h3>
+                    <p>Vista general del estado económico y financiero actual con gráficos interactivos.</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Propiedades</h3>
+                    <p>Administre y consulte el inventario completo de propiedades disponibles.</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Herramientas Rápidas</h3>
+                    <p>Acceso directo a las herramientas más utilizadas para cálculos y conversiones.</p>
+                </div> -->
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Funciones básicas
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            document.getElementById('datetime').textContent = now.toLocaleDateString('es-ES', options);
+        }
+        
+        // Formatear precio en ARS
+        function formatARSPrice(value) {
+            if (isNaN(value) || value === null) return '-';
+            return new Intl.NumberFormat('es-AR', {
+                style: 'currency',
+                currency: 'ARS',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(value);
+        }
+        
+        // Almacenamiento en caché
+        const dollarCache = {
+            oficial: { compra: 350, venta: 365 },
+            blue: { compra: 720, venta: 740 },
+            mep: { venta: 680 },
+            bna: { compra: 348, venta: 363 },
+            lastUpdated: new Date().toISOString()
+        };
+        
+        // Mostrar datos desde caché
+        function displayCachedData() {
+            const cache = loadFromCache();
+            
+            if (cache.oficial) {
+                document.getElementById('oficial-price').textContent = formatARSPrice(cache.oficial.venta);
+                document.getElementById('oficial-buy').textContent = formatARSPrice(cache.oficial.compra);
+                document.getElementById('oficial-sell').textContent = formatARSPrice(cache.oficial.venta);
+            }
+            
+            if (cache.blue) {
+                document.getElementById('blue-price').textContent = formatARSPrice(cache.blue.venta);
+                document.getElementById('blue-buy').textContent = formatARSPrice(cache.blue.compra);
+                document.getElementById('blue-sell').textContent = formatARSPrice(cache.blue.venta);
+            }
+            
+            if (cache.mep) {
+                document.getElementById('mep-price').textContent = formatARSPrice(cache.mep.venta);
+                document.getElementById('mep-last').textContent = formatARSPrice(cache.mep.venta);
+            }
+            
+            if (cache.bna) {
+                document.getElementById('bna-price').textContent = formatARSPrice(cache.bna.venta);
+                document.getElementById('bna-buy').textContent = formatARSPrice(cache.bna.compra);
+                document.getElementById('bna-sell').textContent = formatARSPrice(cache.bna.venta);
+            }
+            
+            if (cache.lastUpdated) {
+                const updated = new Date(cache.lastUpdated);
+                document.getElementById('dollar-last-updated').textContent = 
+                    `Última actualización: ${updated.toLocaleTimeString('es-ES')}`;
+            }
+        }
+        
+        // Cargar desde caché local
+        function loadFromCache() {
+            try {
+                const cached = localStorage.getItem('dollarCache');
+                if (cached) {
+                    return JSON.parse(cached);
+                }
+            } catch (e) {
+                console.error('Error loading cache:', e);
+            }
+            return dollarCache; // Valores por defecto
+        }
+        
+        // Guardar en caché
+        function saveToCache(data) {
+            try {
+                const cache = loadFromCache();
+                const newCache = { ...cache, ...data, lastUpdated: new Date().toISOString() };
+                localStorage.setItem('dollarCache', JSON.stringify(newCache));
+            } catch (e) {
+                console.error('Error saving cache:', e);
+            }
+        }
+        
+        // Obtener datos de APIs alternativas
+        async function fetchDollarRates() {
+            console.log('Actualizando cotizaciones...');
+            
+            // Mostrar datos en caché primero
+            displayCachedData();
+            
+            try {
+                // Intentar con múltiples fuentes
+                await Promise.any([
+                    fetchDollarFromBluelytics(),
+                    fetchDollarFromAlternative1(),
+                    fetchDollarFromAlternative2()
+                ]);
+                
+            } catch (error) {
+                console.log('Todas las fuentes fallaron, usando datos en caché');
+            }
+        }
+        
+        // Fuente principal - Bluelytics
+        async function fetchDollarFromBluelytics() {
+            try {
+                const response = await fetch('https://api.bluelytics.com.ar/v2/latest');
+                if (!response.ok) throw new Error('Error en Bluelytics');
+                
+                const data = await response.json();
+                
+                // Actualizar UI
+                document.getElementById('oficial-price').textContent = formatARSPrice(data.oficial.value_sell);
+                document.getElementById('oficial-buy').textContent = formatARSPrice(data.oficial.value_buy);
+                document.getElementById('oficial-sell').textContent = formatARSPrice(data.oficial.value_sell);
+                
+                document.getElementById('blue-price').textContent = formatARSPrice(data.blue.value_sell);
+                document.getElementById('blue-buy').textContent = formatARSPrice(data.blue.value_buy);
+                document.getElementById('blue-sell').textContent = formatARSPrice(data.blue.value_sell);
+                
+                // Guardar en caché
+                saveToCache({
+                    oficial: { compra: data.oficial.value_buy, venta: data.oficial.value_sell },
+                    blue: { compra: data.blue.value_buy, venta: data.blue.value_sell }
+                });
+                
+                return true;
+            } catch (error) {
+                console.log('Bluelytics no disponible');
+                return false;
+            }
+        }
+        
+        // Fuente alternativa 1
+        async function fetchDollarFromAlternative1() {
+            try {
+                // Obtener MEP de una fuente alternativa
+                const mepResponse = await fetch('https://api-dolar-argentina.herokuapp.com/api/dolarbolsa');
+                if (!mepResponse.ok) throw new Error('Error en fuente alternativa 1');
+                
+                const mepData = await mepResponse.json();
+                const mepValue = parseFloat(mepData.venta);
+                
+                if (!isNaN(mepValue)) {
+                    document.getElementById('mep-price').textContent = formatARSPrice(mepValue);
+                    document.getElementById('mep-last').textContent = formatARSPrice(mepValue);
+                    saveToCache({ mep: { venta: mepValue } });
+                }
+                
+                return true;
+            } catch (error) {
+                console.log('Fuente alternativa 1 no disponible');
+                return false;
+            }
+        }
+        
+        // Fuente alternativa 2
+        async function fetchDollarFromAlternative2() {
+            try {
+                // Obtener datos del Banco Nación
+                const bnaResponse = await fetch('https://api-dolar-argentina.herokuapp.com/api/dolaroficial');
+                if (!bnaResponse.ok) throw new Error('Error en fuente alternativa 2');
+                
+                const bnaData = await bnaResponse.json();
+                const bnaCompra = parseFloat(bnaData.compra);
+                const bnaVenta = parseFloat(bnaData.venta);
+                
+                if (!isNaN(bnaCompra) && !isNaN(bnaVenta)) {
+                    document.getElementById('bna-price').textContent = formatARSPrice(bnaVenta);
+                    document.getElementById('bna-buy').textContent = formatARSPrice(bnaCompra);
+                    document.getElementById('bna-sell').textContent = formatARSPrice(bnaVenta);
+                    saveToCache({ bna: { compra: bnaCompra, venta: bnaVenta } });
+                }
+                
+                return true;
+            } catch (error) {
+                console.log('Fuente alternativa 2 no disponible');
+                return false;
+            }
+        }
+        
+         // Format market cap
+        function formatMarketCap(value) {
+            if (value >= 1e12) {
+                return `$${(value / 1e12).toFixed(2)}T`;
+            } else if (value >= 1e9) {
+                return `$${(value / 1e9).toFixed(2)}B`;
+            } else if (value >= 1e6) {
+                return `$${(value / 1e6).toFixed(2)}M`;
+            }
+            return `$${value}`;
+        }
+        
+        // Format currency
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 6
+            }).format(value);
+        }
+        
+        // Calculate percentage from ATH
+        function calculateAthPercentage(currentPrice, ath) {
+            if (!ath || ath === 0) return '-';
+            const percentage = ((currentPrice - ath) / ath) * 100;
+            return percentage.toFixed(2) + '%';
+        }
+        
+        // Fetch crypto prices from CoinGecko API
+        async function fetchCryptoPrices() {
+            try {
+                const response = await fetch(
+                    'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,binancecoin,solana,bitcoin-cash&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h'
+                );
+                
+                if (!response.ok) {
+                    throw new Error('Error al obtener los datos de criptomonedas');
+                }
+                
+                const data = await response.json();
+                
+                // Update crypto cards
+                data.forEach(crypto => {
+                    const price = formatCurrency(crypto.current_price);
+                    const change = crypto.price_change_percentage_24h;
+                    const changeFormatted = change.toFixed(2) + '%';
+                    const changeClass = change >= 0 ? 'positive' : 'negative';
+                    const marketCap = formatMarketCap(crypto.market_cap);
+                    const ath = formatCurrency(crypto.ath);
+                    const athPercentage = calculateAthPercentage(crypto.current_price, crypto.ath);
+                    const athPercentageClass = crypto.current_price >= crypto.ath ? 'positive' : 'negative';
+                    
+                    switch (crypto.id) {
+                        case 'bitcoin':
+                            document.getElementById('btc-price').textContent = price;
+                            document.getElementById('btc-change').textContent = changeFormatted;
+                            document.getElementById('btc-change').className = 'crypto-change ' + changeClass;
+                            document.getElementById('btc-market-cap').textContent = marketCap;
+                            document.getElementById('btc-ath').textContent = ath;
+                            document.getElementById('btc-ath-percentage').textContent = athPercentage;
+                            document.getElementById('btc-ath-percentage').className = 'ath-percentage ' + athPercentageClass;
+                            break;
+                        case 'ethereum':
+                            document.getElementById('eth-price').textContent = price;
+                            document.getElementById('eth-change').textContent = changeFormatted;
+                            document.getElementById('eth-change').className = 'crypto-change ' + changeClass;
+                            document.getElementById('eth-market-cap').textContent = marketCap;
+                            document.getElementById('eth-ath').textContent = ath;
+                            document.getElementById('eth-ath-percentage').textContent = athPercentage;
+                            document.getElementById('eth-ath-percentage').className = 'ath-percentage ' + athPercentageClass;
+                            break;
+                        case 'binancecoin':
+                            document.getElementById('bnb-price').textContent = price;
+                            document.getElementById('bnb-change').textContent = changeFormatted;
+                            document.getElementById('bnb-change').className = 'crypto-change ' + changeClass;
+                            document.getElementById('bnb-market-cap').textContent = marketCap;
+                            document.getElementById('bnb-ath').textContent = ath;
+                            document.getElementById('bnb-ath-percentage').textContent = athPercentage;
+                            document.getElementById('bnb-ath-percentage').className = 'ath-percentage ' + athPercentageClass;
+                            break;
+                        case 'solana':
+                            document.getElementById('sol-price').textContent = price;
+                            document.getElementById('sol-change').textContent = changeFormatted;
+                            document.getElementById('sol-change').className = 'crypto-change ' + changeClass;
+                            document.getElementById('sol-market-cap').textContent = marketCap;
+                            document.getElementById('sol-ath').textContent = ath;
+                            document.getElementById('sol-ath-percentage').textContent = athPercentage;
+                            document.getElementById('sol-ath-percentage').className = 'ath-percentage ' + athPercentageClass;
+                            break;
+                        case 'bitcoin-cash':
+                            document.getElementById('bch-price').textContent = price;
+                            document.getElementById('bch-change').textContent = changeFormatted;
+                            document.getElementById('bch-change').className = 'crypto-change ' + changeClass;
+                            document.getElementById('bch-market-cap').textContent = marketCap;
+                            document.getElementById('bch-ath').textContent = ath;
+                            document.getElementById('bch-ath-percentage').textContent = athPercentage;
+                            document.getElementById('bch-ath-percentage').className = 'ath-percentage ' + athPercentageClass;
+                            break;
+                    }
+                });
+                
+            } catch (error) {
+                console.error('Error fetching crypto prices:', error);
+                // Establece el estado de error para todas las tarjetas de las cripto 
+                ['btc', 'eth', 'bnb', 'sol', 'bch'].forEach(symbol => {
+                    document.getElementById(`${symbol}-price`).textContent = 'Error';
+                    document.getElementById(`${symbol}-change`).textContent = '-';
+                    document.getElementById(`${symbol}-market-cap`).textContent = '-';
+                    document.getElementById(`${symbol}-ath`).textContent = '-';
+                    document.getElementById(`${symbol}-ath-percentage`).textContent = '-';
+                });
+            }
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDateTime();
+            fetchCryptoPrices();
+            fetchDollarRates();
+            
+            // Actualizar cada 2 minutos
+            setInterval(fetchDollarRates, 120000);
+            setInterval(updateDateTime, 1000);
+        });
+    </script>
+</body>
+</html>
