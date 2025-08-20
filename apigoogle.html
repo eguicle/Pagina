@@ -1,0 +1,39 @@
+<section class="card" id="ciudadania-section" style="display:none;">
+    <h2><i class="fas fa-folder-open"></i> Documentos - Ciudadanía</h2>
+    <ul id="ciudadania-files"></ul>
+</section>
+
+<script>
+    async function loadCiudadaniaFiles() {
+        document.getElementById("ciudadania-section").style.display = "block";
+        const listContainer = document.getElementById("ciudadania-files");
+        listContainer.innerHTML = "<li>Cargando archivos...</li>";
+
+        const folderId = '1BlaGunEq8kMVrtocb4uqV4adYHWqxGXy'; // 👈 ID de tu carpeta en Drive
+        const apiKey = AIzaSyA5qmmzZGpQh1S9F_7phvJFWNy-q4Mbw0U;     // 👈 API Key de Google Cloud
+
+        const url = `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${apiKey}&fields=files(id,name,webViewLink,webContentLink)`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            listContainer.innerHTML = "";
+
+            if (!data.files || data.files.length === 0) {
+                listContainer.innerHTML = "<li>No hay archivos en la carpeta.</li>";
+                return;
+            }
+
+            data.files.forEach(file => {
+                const li = document.createElement("li");
+                li.innerHTML = `<a href="https://drive.google.com/uc?id=${file.id}&export=download" target="_blank">${file.name}</a>`;
+                listContainer.appendChild(li);
+            });
+        } catch (e) {
+            console.error("Error cargando desde Google Drive:", e);
+            listContainer.innerHTML = "<li>Error cargando archivos.</li>";
+        }
+    }
+
+</script>

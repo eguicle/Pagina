@@ -306,7 +306,7 @@
         }
         
         /* Responsive */
-        @media (max-width: 768px) {
+        /* @media (max-width: 768px) {
             .container {
                 flex-direction: column;
             }
@@ -323,7 +323,7 @@
             .crypto-grid {
                 grid-template-columns: 1fr;
             }
-        }
+        } */
         
         /* Dollar Section */
         .dollar-section {
@@ -430,6 +430,78 @@
             background-color: rgba(255, 53, 71, 0.1);
             color: #ff3547;
         }
+       /* ============================
+        Ciudadania Section
+        ============================ */
+        .ciudadania-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-sizing: border-box;
+        }
+
+        .ciudadania-section .archivo {
+            flex: 1 1 250px;
+            max-width: 300px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        /* ============================
+        Responsive
+        ============================ */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .crypto-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Ajustes para ciudadania-section en pantallas pequeñas */
+            .ciudadania-section {
+                flex-direction: column !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 10px;
+            }
+
+            .ciudadania-section .archivo {
+                flex: 1 1 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
+        /* ============================
+        Extra Small (móviles muy pequeños)
+        ============================ */
+        @media (max-width: 500px) {
+            .ciudadania-section {
+                padding: 5px;
+            }
+
+            .ciudadania-section .archivo {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -503,8 +575,12 @@
                     <h2>Sistema Integral de Gestión</h2>
                 </div>
                 
-                <!-- Secciones originales de dólares y criptos -->
-                <!-- Sección de Dólares -->
+                <!-- Secciones -->
+                <section class="card" id="ciudadania-section" style="display:none;">
+                    <h2><i class="fas fa-folder-open"></i> Documentos - Ciudadanía</h2>
+                    <ul id="ciudadania-files"></ul>
+                </section>
+
                 <section class="dollar-section">
                     <h2><i class="fas fa-dollar-sign"></i> Cotización del Dólar</h2>
                     <div class="dollar-grid" id="dollar-grid">
@@ -736,10 +812,10 @@
                 </section>
 
                 <!-- Sección Documentos - Ciudadanía -->
-                <section class="card" id="ciudadania-section" style="display:none;">
+                <!-- <section class="card" id="ciudadania-section" style="display:none;">
                     <h2><i class="fas fa-folder-open"></i> Documentos - Ciudadanía</h2>
                     <ul id="ciudadania-files"></ul>
-                </section>
+                </section> -->
 
             </div>
         </main>
@@ -1091,36 +1167,37 @@
 
         // Cargar archivos de Ciudadanía
         async function loadCiudadaniaFiles() {
-            // Mostrar sección
             document.getElementById("ciudadania-section").style.display = "block";
-
             const listContainer = document.getElementById("ciudadania-files");
             listContainer.innerHTML = "<li>Cargando archivos...</li>";
 
-            try {
-                // Llamada al backend (PHP/Node/Python) que devuelve JSON con los archivos
-                const response = await fetch("/api/ciudadania");
-                if (!response.ok) throw new Error("Error en la API");
+            const folderId = '1BlaGunEq8kMVrtocb4uqV4adYHWqxGXy'; // 👈 ID de tu carpeta en Drive
+            const apiKey = 'AIzaSyA5qmmzZGpQh1S9F_7phvJFWNy-q4Mbw0U';     // 👈 API Key de Google Cloud
 
-                const files = await response.json();
+            const url = `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${apiKey}&fields=files(id,name,webViewLink,webContentLink)`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
                 listContainer.innerHTML = "";
 
-                if (files.length === 0) {
-                    listContainer.innerHTML = "<li>No hay archivos disponibles.</li>";
+                if (!data.files || data.files.length === 0) {
+                    listContainer.innerHTML = "<li>No hay archivos en la carpeta.</li>";
                     return;
                 }
 
-                files.forEach(file => {
+                data.files.forEach(file => {
                     const li = document.createElement("li");
-                    li.innerHTML = `<a href="${file.url}" download>${file.name}</a>`;
+                    li.innerHTML = `<a href="https://drive.google.com/uc?id=${file.id}&export=download" target="_blank">${file.name}</a>`;
                     listContainer.appendChild(li);
                 });
-
-            } catch (error) {
-                console.error(error);
+            } catch (e) {
+                console.error("Error cargando desde Google Drive:", e);
                 listContainer.innerHTML = "<li>Error cargando archivos.</li>";
             }
         }
+
     </script>
 </body>
 </html>
