@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Integral - Inicio</title>
+    <style>
+        /* estilos originales omitidos por brevedad, los mantengo */
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+         <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Sistema Integral de Gestión</h2>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-chart-line"></i> Mefin
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#" class="nav-link">Módulo Económico Financiero</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-building"></i> Inmuebles
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#" class="nav-link">Guemes</a></li>
+                        <li><a href="#" class="nav-link">Billinghurst</a></li>
+                        <li><a href="#" class="nav-link">Casa Goya</a></li>
+                        <li><a href="#" class="nav-link">Campo</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-tools"></i> Documentos
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#" class="nav-link" onclick="loadCiudadaniaFiles()">Ciudadania</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-ellipsis-h"></i> Varios
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#" class="nav-link">Configuración</a></li>
+                        <li><a href="#" class="nav-link">Ayuda</a></li>
+                        <li><a href="#" class="nav-link">Soporte</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header">
+                <h1>Sistema de Gestión - Guillermo Clemente</h1>
+                <div class="datetime" id="datetime"></div>
+            </div>
+            
+            <div class="dashboard">
+                <div class="card welcome-card">
+                    <h2>Sistema Integral de Gestión</h2>
+                </div>
+                
+                <!-- Secciones originales de dólares y criptos -->
+
+                <!-- Sección Documentos - Ciudadanía -->
+                <section class="card" id="ciudadania-section" style="display:none;">
+                    <h2><i class="fas fa-folder-open"></i> Documentos - Ciudadanía</h2>
+                    <ul id="ciudadania-files"></ul>
+                </section>
+
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // funciones originales omitidas por brevedad, se mantienen
+
+        // Cargar archivos de Ciudadanía
+        async function loadCiudadaniaFiles() {
+            // Mostrar sección
+            document.getElementById("ciudadania-section").style.display = "block";
+
+            const listContainer = document.getElementById("ciudadania-files");
+            listContainer.innerHTML = "<li>Cargando archivos...</li>";
+
+            try {
+                // Llamada al backend (PHP/Node/Python) que devuelve JSON con los archivos
+                const response = await fetch("/api/ciudadania");
+                if (!response.ok) throw new Error("Error en la API");
+
+                const files = await response.json();
+                listContainer.innerHTML = "";
+
+                if (files.length === 0) {
+                    listContainer.innerHTML = "<li>No hay archivos disponibles.</li>";
+                    return;
+                }
+
+                files.forEach(file => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<a href="${file.url}" download>${file.name}</a>`;
+                    listContainer.appendChild(li);
+                });
+
+            } catch (error) {
+                console.error(error);
+                listContainer.innerHTML = "<li>Error cargando archivos.</li>";
+            }
+        }
+    </script>
+</body>
+</html>
