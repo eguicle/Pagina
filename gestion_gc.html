@@ -1154,17 +1154,7 @@
             }
         }
 
-        // Inicializar todo al cargar la página
-        document.addEventListener('DOMContentLoaded', () => {
-            updateDateTime();
-            fetchCryptoPrices();
-            fetchDollarRates();
-            
-            // Actualizar cada 60 segundos
-            setInterval(fetchCryptoPrices, 60000);
-            setInterval(fetchDollarRates, 60000);
-        });
-
+        
         // Cargar archivos de Ciudadanía
         async function loadCiudadaniaFiles() {
             document.getElementById("ciudadania-section").style.display = "block";
@@ -1197,6 +1187,17 @@
                 listContainer.innerHTML = "<li>Error cargando archivos.</li>";
             }
         }
+
+        // Inicializar todo al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDateTime();
+            fetchCryptoPrices();
+            fetchDollarRates();
+            
+            // Actualizar cada 60 segundos
+            setInterval(fetchCryptoPrices, 60000);
+            setInterval(fetchDollarRates, 60000);
+        });
 
     </script>
 </body>
