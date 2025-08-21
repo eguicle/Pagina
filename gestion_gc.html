@@ -47,7 +47,19 @@
             position: relative;
             z-index: 10;
         }
-        
+        .columna {
+            border: 2px solid red;
+            border-radius: 8px;
+            background-color: lemonchiffon;
+            width: 100%;
+            /* max-width: 1200px; */
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-sizing: border-box;
+        }
         .logo {
             text-align: center;
             padding: 20px 0;
@@ -59,7 +71,6 @@
             font-size: 1.5rem;
             font-weight: 600;
         }
-        
         .nav-menu {
             list-style: none;
         }
@@ -434,7 +445,10 @@
         Ciudadania Section
         ============================ */
         .ciudadania-section {
-            width: 100%;
+            border-radius: 5%;
+            border-color: #1565c0;
+            background-color: rgb(238, 150, 35);
+            width: 80%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
@@ -447,9 +461,9 @@
         .ciudadania-section .archivo {
             flex: 1 1 250px;
             max-width: 300px;
-            background-color: #f9f9f9;
+            background-color: #aeec73;
             padding: 15px;
-            border: 1px solid #ddd;
+            border: 1px solid #0920e9;
             border-radius: 8px;
             text-align: center;
         }
@@ -576,10 +590,19 @@
                 </div>
                 
                 <!-- Secciones -->
-                <section class="card" id="ciudadania-section" style="display:none;">
+                <div class="row" id="ciudadania-section" style="display:none">
+                    <div class="col-6">
+                        <div class="columna bg-light">
+                            <h2><i class="fas fa-folder-open"></i> Documentos - Ciudadanía</h2>
+                            <ul id="ciudadania-files"></ul>
+                        </div>
+                    </div>
+                </div>
+
+               <!--  <section class="card" id="ciudadania-section" style="display:none;">
                     <h2><i class="fas fa-folder-open"></i> Documentos - Ciudadanía</h2>
                     <ul id="ciudadania-files"></ul>
-                </section>
+                </section> -->
 
                 <section class="dollar-section">
                     <h2><i class="fas fa-dollar-sign"></i> Cotización del Dólar</h2>
@@ -1162,7 +1185,7 @@
             listContainer.innerHTML = "<li>Cargando archivos...</li>";
 
             const folderId = '1BlaGunEq8kMVrtocb4uqV4adYHWqxGXy'; // 👈 ID de tu carpeta en Drive
-            const apiKey = 'AIzaSyA5qmmzZGpQh1S9F_7phvJFWNy-q4Mbw0U';     // 👈 API Key de Google Cloud
+            const apiKey = [MI_API_KEY];     // 👈 API Key de Google Cloud
 
             const url = `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${apiKey}&fields=files(id,name,webViewLink,webContentLink)`;
 
