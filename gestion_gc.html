@@ -18,25 +18,25 @@
             --sol-color: #00ffbd;
             --bch-color: #8dc351;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
         }
-        
+
         .container {
             display: flex;
             min-height: 100vh;
         }
-        
+
         /* Sidebar */
         .sidebar {
             width: 250px;
@@ -47,38 +47,27 @@
             position: relative;
             z-index: 10;
         }
-        .columna {
-            border: 2px solid red;
-            border-radius: 8px;
-            background-color: lemonchiffon;
-            width: 100%;
-            /* max-width: 1200px; */
-            margin: 0 auto;
-            padding: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            box-sizing: border-box;
-        }
+
         .logo {
             text-align: center;
             padding: 20px 0;
             margin-bottom: 30px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .logo h2 {
             font-size: 1.5rem;
             font-weight: 600;
         }
+
         .nav-menu {
             list-style: none;
         }
-        
+
         .nav-item {
             position: relative;
         }
-        
+
         .nav-link {
             display: block;
             padding: 12px 20px;
@@ -87,18 +76,18 @@
             transition: all 0.3s ease;
             font-size: 0.95rem;
         }
-        
+
         .nav-link:hover {
             background-color: rgba(255, 255, 255, 0.1);
             padding-left: 25px;
         }
-        
+
         .nav-link i {
             margin-right: 10px;
             width: 20px;
             text-align: center;
         }
-        
+
         .submenu {
             list-style: none;
             max-height: 0;
@@ -106,23 +95,23 @@
             transition: max-height 0.3s ease;
             background-color: rgba(0, 0, 0, 0.1);
         }
-        
+
         .submenu .nav-link {
             padding-left: 40px;
             font-size: 0.85rem;
         }
-        
+
         .nav-item.active .submenu {
             max-height: 500px;
         }
-        
+
         /* Main content */
         .main-content {
             flex: 1;
             padding: 30px;
             position: relative;
         }
-        
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -131,12 +120,12 @@
             padding-bottom: 20px;
             border-bottom: 1px solid #e0e0e0;
         }
-        
+
         .header h1 {
             font-size: 1.8rem;
             color: var(--dark-color);
         }
-        
+
         .datetime {
             background-color: white;
             padding: 10px 20px;
@@ -146,13 +135,13 @@
             font-weight: 500;
             color: var(--primary-color);
         }
-        
+
         .dashboard {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
         }
-        
+
         .card {
             background-color: white;
             border-radius: 8px;
@@ -160,39 +149,39 @@
             padding: 20px;
             transition: transform 0.3s ease;
         }
-        
+
         .card:hover {
             transform: translateY(-5px);
         }
-        
+
         .card h3 {
             color: var(--secondary-color);
             margin-bottom: 15px;
             font-size: 1.2rem;
         }
-        
+
         .card p {
             color: #666;
             font-size: 0.9rem;
         }
-        
+
         .welcome-card {
             grid-column: 1 / -1;
             background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
             color: white;
             padding: 30px;
         }
-        
+
         .welcome-card h2 {
             font-size: 1.8rem;
             margin-bottom: 10px;
         }
-        
+
         .welcome-card p {
             color: rgba(255, 255, 255, 0.9);
             max-width: 70%;
         }
-        
+
         /* Crypto Section */
         .crypto-section {
             grid-column: 1 / -1;
@@ -201,7 +190,7 @@
             box-shadow: var(--shadow);
             padding: 20px;
         }
-        
+
         .crypto-section h2 {
             color: var(--dark-color);
             margin-bottom: 20px;
@@ -209,35 +198,35 @@
             display: flex;
             align-items: center;
         }
-        
+
         .crypto-section h2 i {
             margin-right: 10px;
             color: var(--btc-color);
         }
-        
+
         .crypto-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 15px;
         }
-        
+
         .crypto-card {
             border: 1px solid #eee;
             border-radius: 8px;
             padding: 15px;
             transition: all 0.3s ease;
         }
-        
+
         .crypto-card:hover {
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-        
+
         .crypto-header {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
         }
-        
+
         .crypto-icon {
             width: 36px;
             height: 36px;
@@ -249,30 +238,30 @@
             font-weight: bold;
             margin-right: 10px;
         }
-        
+
         .btc { background-color: var(--btc-color); }
         .eth { background-color: var(--eth-color); }
         .bnb { background-color: var(--bnb-color); }
         .sol { background-color: var(--sol-color); color: #000; }
         .bch { background-color: var(--bch-color); }
-        
+
         .crypto-name {
             font-weight: 600;
             font-size: 1.1rem;
         }
-        
+
         .crypto-symbol {
             color: #777;
             font-size: 0.9rem;
             margin-left: 5px;
         }
-        
+
         .crypto-price {
             font-size: 1.4rem;
             font-weight: 700;
             margin: 10px 0;
         }
-        
+
         .crypto-stats {
             display: flex;
             flex-wrap: wrap;
@@ -280,62 +269,42 @@
             font-size: 0.9rem;
             margin-bottom: 8px;
         }
-        
+
         .crypto-stat-item {
             display: flex;
             flex-direction: column;
         }
-        
+
         .stat-label {
             color: #666;
             font-size: 0.8rem;
         }
-        
+
         .stat-value {
             font-weight: 500;
         }
-        
+
         .crypto-change {
             padding: 3px 8px;
             border-radius: 4px;
             font-weight: 500;
         }
-        
+
         .positive {
             background-color: rgba(0, 200, 83, 0.1);
             color: #00c853;
         }
-        
+
         .negative {
             background-color: rgba(255, 53, 71, 0.1);
             color: #ff3547;
         }
-        
+
         .ath-percentage {
             font-size: 0.85rem;
             margin-top: 2px;
         }
-        
-        /* Responsive */
-        /* @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100%;
-                height: auto;
-            }
-            
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-            
-            .crypto-grid {
-                grid-template-columns: 1fr;
-            }
-        } */
-        
+
         /* Dollar Section */
         .dollar-section {
             grid-column: 1 / -1;
@@ -344,7 +313,7 @@
             box-shadow: var(--shadow);
             padding: 20px;
         }
-        
+
         .dollar-section h2 {
             color: var(--dark-color);
             margin-bottom: 20px;
@@ -352,35 +321,35 @@
             display: flex;
             align-items: center;
         }
-        
+
         .dollar-section h2 i {
             margin-right: 10px;
             color: #2e7d32; /* Verde similar al dólar */
         }
-        
+
         .dollar-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 15px;
         }
-        
+
         .dollar-card {
             border: 1px solid #eee;
             border-radius: 8px;
             padding: 15px;
             transition: all 0.3s ease;
         }
-        
+
         .dollar-card:hover {
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-        
+
         .dollar-header {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
         }
-        
+
         .dollar-icon {
             width: 36px;
             height: 36px;
@@ -393,62 +362,58 @@
             margin-right: 10px;
             background-color: #2e7d32;
         }
-        
+
         .dollar-name {
             font-weight: 600;
             font-size: 1.1rem;
         }
-        
+
         .dollar-price {
             font-size: 1.4rem;
             font-weight: 700;
             margin: 10px 0;
         }
-        
+
         .dollar-stats {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             font-size: 0.9rem;
         }
-        
+
         .dollar-stat-item {
             display: flex;
             flex-direction: column;
         }
-        
+
         .dollar-stat-label {
             color: #666;
             font-size: 0.8rem;
         }
-        
+
         .dollar-stat-value {
             font-weight: 500;
         }
-        
+
         .dollar-variation {
             padding: 3px 8px;
             border-radius: 4px;
             font-weight: 500;
         }
-        
+
         .dollar-positive {
             background-color: rgba(0, 200, 83, 0.1);
             color: #00c853;
         }
-        
+
         .dollar-negative {
             background-color: rgba(255, 53, 71, 0.1);
             color: #ff3547;
         }
-       /* ============================
-        Ciudadania Section
-        ============================ */
+
+        /* Ciudadania Section */
         .ciudadania-section {
-            border-radius: 5%;
-            border-color: #1565c0;
-            background-color: rgb(238, 150, 35);
-            width: 80%;
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
@@ -461,35 +426,40 @@
         .ciudadania-section .archivo {
             flex: 1 1 250px;
             max-width: 300px;
-            background-color: #aeec73;
+            background-color: #f9f9f9;
             padding: 15px;
-            border: 1px solid #0920e9;
+            border: 1px solid #ddd;
             border-radius: 8px;
             text-align: center;
         }
 
         /* ============================
-        Responsive
+        Responsive Ajustado
         ============================ */
+        @media (max-width: 1024px) {
+            .ciudadania-section {
+                max-width: 100% !important;
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
             }
-
+            
             .sidebar {
                 width: 100%;
                 height: auto;
             }
-
+            
             .dashboard {
                 grid-template-columns: 1fr;
             }
-
+            
             .crypto-grid {
                 grid-template-columns: 1fr;
             }
 
-            /* Ajustes para ciudadania-section en pantallas pequeñas */
             .ciudadania-section {
                 flex-direction: column !important;
                 width: 100% !important;
@@ -503,9 +473,6 @@
             }
         }
 
-        /* ============================
-        Extra Small (móviles muy pequeños)
-        ============================ */
         @media (max-width: 500px) {
             .ciudadania-section {
                 padding: 5px;
@@ -516,6 +483,7 @@
                 font-size: 14px;
             }
         }
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
