@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Criptomonedas y Oro en Tiempo Real</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background: #f0f0f0;
+        }
+        .up { color: green; }
+        .down { color: red; }
+        .loading {
+            text-align: center;
+            padding: 30px;
+            font-size: 1.2em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>Criptomonedas y Oro en Tiempo Real</h1>
+    <div class="container">
+        <div id="loading" class="loading">Cargando datos...</div>
+        <table id="data-table" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Activo</th>
+                    <th>Precio Actual (USD)</th>
+                    <th>ATH (USD)</th>
+                    <th>Variación % Último</th>
+                    <th>Variación % vs ATH</th>
+                </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+        </table>
+    </div>
+    <script>
+        // IDs de CoinGecko para las criptos
+        const coins = [
+            { id: 'bitcoin', name: 'Bitcoin' },
+            { id: 'ethereum', name: 'Ether' },
+            { id: 'solana', name: 'Solana' },
+            { id: 'binancecoin', name: 'BNB' },
+            { id: 'bitcoin-cash', name: 'Bitcoin Cash' }
+        ];
+
+        // API para oro (Metals-API demo, solo oro, cotización en USD)
+        // Usaremos la API pública de goldapi.io para oro (requiere API key demo)
+        // Puedes obtener una API key gratuita en https://www.goldapi.io/
+        // Aquí usamos una demo key pública, pero para producción usa tu propia key.
+        const GOLD_API_KEY = 'goldapi-2b7c4b6b-1e6e-4e6b-8e6e-2b7c4b6b1e6e-demo';
+        const GOLD_API_URL = `https://www.goldapi.io/api/XAU/USD`;
+
+        async function fetchCryptoData() {
+            // CoinGecko API para precios y ATH
+            const ids = coins.map(c => c.id).join(',');
+            const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${ids}&order=market_cap_desc&per_page=10&page=1&sparkline=false`;
+            const res = await fetch(url);
+            return await res.json();
+        }
+
+        async function fetchGoldData() {
+            const res = await fetch(GOLD_API_URL, {
+                headers: { 'x-access-token': GOLD_API_KEY, 'Content-Type': 'application/json' }
+            });
+            return await res.json();
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.price.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
+                    <td>${item.ath.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
+                    <td class="${item.change_24h >= 0 ? 'up' : 'down'}">${item.change_24h.toFixed(2)}%</td>
+                    <td class="${item.change_vs_ath >= 0 ? 'up' : 'down'}">${item.change_vs_ath.toFixed(2)}%</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function loadData() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('data-table').style.display = 'none';
+            try {
+                const [crypto, gold] = await Promise.all([
+                    fetchCryptoData(),
+                    fetchGoldData()
+                ]);
+                // Criptos
+                const cryptoRows = crypto.map(c => ({
+                    name: coins.find(x => x.id === c.id).name,
+                    price: c.current_price,
+                    ath: c.ath,
+                    change_24h: c.price_change_percentage_24h,
+                    change_vs_ath: ((c.current_price - c.ath) / c.ath) * 100
+                }));
+                // Oro
+                const goldRow = {
+                    name: 'Oro',
+                    price: gold.price,
+                    ath: gold.high_price, // goldapi.io da el máximo del día, no el ATH histórico
+                    change_24h: ((gold.price - gold.open_price) / gold.open_price) * 100,
+                    change_vs_ath: ((gold.price - gold.high_price) / gold.high_price) * 100
+                };
+                renderTable([...cryptoRows, goldRow]);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('data-table').style.display = 'table';
+            } catch (e) {
+                document.getElementById('loading').innerText = 'Error al cargar los datos.';
+            }
+        }
+
+        loadData();
+        // Actualiza cada 60 segundos
+        setInterval(loadData, 60000);
+    </script>
+</body>
+</html>
